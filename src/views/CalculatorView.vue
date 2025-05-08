@@ -6,27 +6,16 @@
       <form @submit.prevent="calculateBaZi" class="space-y-6">
         <div class="grid md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label for="birthYear" class="label font-kai">出生年份</label>
-            <select id="birthYear" v-model="birthYear" class="input w-full font-song" required>
-              <option value="" disabled>请选择年份</option>
-              <option v-for="year in years" :key="year" :value="year">{{ year }}年</option>
-            </select>
-          </div>
-          
-          <div class="space-y-2">
-            <label for="birthMonth" class="label font-kai">出生月份</label>
-            <select id="birthMonth" v-model="birthMonth" class="input w-full font-song" required>
-              <option value="" disabled>请选择月份</option>
-              <option v-for="month in 12" :key="month" :value="month">{{ month }}月</option>
-            </select>
-          </div>
-          
-          <div class="space-y-2">
-            <label for="birthDay" class="label font-kai">出生日期</label>
-            <select id="birthDay" v-model="birthDay" class="input w-full font-song" required>
-              <option value="" disabled>请选择日期</option>
-              <option v-for="day in days" :key="day" :value="day">{{ day }}日</option>
-            </select>
+            <label for="birthDate" class="label font-kai">出生日期</label>
+            <input 
+              id="birthDate" 
+              v-model="birthDate" 
+              class="input w-full font-song" 
+              placeholder="如 2000-8-16" 
+              required
+            />
+            <div class="text-gray-500 text-sm mt-1">请输入YYYY-M-D 格式，如 2000-8-16</div>
+            <div v-if="dateFormatError" class="text-red-500 text-sm mt-1">请使用正确的日期格式：YYYY-M-D</div>
           </div>
           
           <div class="space-y-2">
@@ -78,40 +67,35 @@ import '../assets/styles.css';
 const router = useRouter();
 
 // 表单数据
-const birthYear = ref('');
-const birthMonth = ref('');
-const birthDay = ref('');
+const birthDate = ref('');
 const birthHour = ref('');
 const gender = ref('');
 const calendar = ref('公历');
+const dateFormatError = ref(false);
 
-// 生成年份选项（1900-2100）
-const years = Array.from({ length: 201 }, (_, i) => i + 1900);
+// 验证日期格式是否正确 (YYYY-M-D)
+const isValidDateFormat = (dateStr) => {
+  // 使用正则表达式验证日期格式
+  const regex = /^\d{4}-\d{1,2}-\d{1,2}$/;
+  if (!regex.test(dateStr)) return false;
+  
+  // 进一步验证日期是否有效
+  const [year, month, day] = dateStr.split('-').map(Number);
+  
+  if (year < 1900 || year > 2100) return false;
+  if (month < 1 || month > 12) return false;
+  
+  // 检查日期是否在当月有效范围内
+  const daysInMonth = new Date(year, month, 0).getDate();
+  if (day < 1 || day > daysInMonth) return false;
+  
+  return true;
+};
 
-// 根据年月计算当月天数
-const days = computed(() => {
-  if (!birthYear.value || !birthMonth.value) return Array.from({ length: 31 }, (_, i) => i + 1);
-  
-  const year = parseInt(birthYear.value);
-  const month = parseInt(birthMonth.value);
-  
-  // 简单判断月份天数
-  if (month === 2) {
-    // 闰年2月29天，平年2月28天
-    const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-    return Array.from({ length: isLeapYear ? 29 : 28 }, (_, i) => i + 1);
-  } else if ([4, 6, 9, 11].includes(month)) {
-    // 4,6,9,11月各30天
-    return Array.from({ length: 30 }, (_, i) => i + 1);
-  } else {
-    // 其他月份31天
-    return Array.from({ length: 31 }, (_, i) => i + 1);
-  }
-});
 
 // 中国传统时辰
 const chineseHours = [
-  '子时 (23:00-00:59)',
+  '早子时 (00:00-00:59)',
   '丑时 (01:00-02:59)',
   '寅时 (03:00-04:59)',
   '卯时 (05:00-06:59)',
@@ -122,20 +106,38 @@ const chineseHours = [
   '申时 (15:00-16:59)',
   '酉时 (17:00-18:59)',
   '戌时 (19:00-20:59)',
-  '亥时 (21:00-22:59)'
+  '亥时 (21:00-22:59)',
+  '晚子时 (23:00-23:59)'
 ];
 
 // 计算八字
 const calculateBaZi = () => {
   try {
+    // 验证日期格式
+    dateFormatError.value = false;
+    if (!isValidDateFormat(birthDate.value)) {
+      dateFormatError.value = true;
+      return;
+    }
+    
     let result = '';
-    const date = `${birthYear.value}-${birthMonth.value}-${birthDay.value}`
+    const date = birthDate.value;
+    
+    // 处理子时的特殊情况
+    let hourIndex = birthHour.value;
+    // 如果选择了早子时或晚子时，需要转换为iztro库识别的子时索引
+    if (hourIndex === 0 || hourIndex === 1) {
+      hourIndex = 0; // iztro库中子时的索引
+    } else {
+      // 其他时辰索引需要减1，因为我们现在有13个选项而不是12个
+      hourIndex = hourIndex - 1;
+    }
     
     if (calendar.value === '公历') {
-      result = astro.bySolar(date, birthHour.value, gender.value)
+      result = astro.bySolar(date, hourIndex, gender.value)
     } else {
       // 如果是农历，直接使用
-      result = astro.byLunar(date, birthHour.value, gender.value);
+      result = astro.byLunar(date, hourIndex, gender.value);
     }
     //  // 阳历日期
     //   solarDate: '2000-8-16',

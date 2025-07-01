@@ -1,0 +1,42 @@
+{
+  "name": "八字计算器 - 专业生辰八字排盘分析",
+  "short_name": "八字计算器",
+  "description": "免费在线八字计算器，专业的生辰八字排盘分析工具，支持公历农历转换，提供详细的命理解析",
+  "start_url": "/eight/",
+  "display": "standalone",
+  "background_color": "#f5f5dc",
+  "theme_color": "#8b4513",
+  "orientation": "portrait",
+  "scope": "/eight/",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["lifestyle", "education", "utilities"],
+  "icons": [
+    {
+      "src": "/eight/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/eight/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/eight/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/eight/screenshot-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

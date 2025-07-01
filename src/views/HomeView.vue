@@ -32,9 +32,39 @@
 
 <script setup>
 import { onMounted } from 'vue';
+import { useSEO } from '../composables/useSEO.js';
 import '../assets/styles.css';
 
+const { updateSEO, addStructuredData } = useSEO();
+
 onMounted(() => {
-  document.title = '生辰八字 - 首页';
+  // 使用SEO组合函数更新页面信息
+  updateSEO('home');
+  
+  // 添加首页特定的结构化数据
+  const homeStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "生辰八字在线计算器",
+    "description": "专业的生辰八字在线计算器，支持公历农历转换，提供详细的八字排盘、五行分析、命主身主查询。",
+    "url": "https://younglina.top/eight",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://younglina.top/eightcalculator",
+      "query-input": "required name=search_term_string"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Woung"
+    },
+    "inLanguage": "zh-CN",
+    "about": {
+      "@type": "Thing",
+      "name": "生辰八字",
+      "description": "中国传统命理学，通过出生年月日时计算个人命理特征"
+    }
+  };
+  
+  addStructuredData(homeStructuredData);
 });
 </script>

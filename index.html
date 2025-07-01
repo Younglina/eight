@@ -16,8 +16,8 @@
     <meta property="og:title" content="生辰八字在线计算器 - 免费八字排盘分析工具" />
     <meta property="og:description" content="专业的生辰八字在线计算器，支持公历农历转换，提供详细的八字排盘、五行分析、命主身主查询。" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://younglina.top/eight" />
-    <meta property="og:image" content="https://younglina.top/eight/icon.svg" />
+    <meta property="og:url" content="https://younglina.wang/eight" />
+    <meta property="og:image" content="https://younglina.wang/eight/icon.svg" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:site_name" content="生辰八字计算器" />
     
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="生辰八字在线计算器 - 免费八字排盘分析工具" />
     <meta name="twitter:description" content="专业的生辰八字在线计算器，支持公历农历转换，提供详细的八字排盘、五行分析、命主身主查询。" />
-    <meta name="twitter:image" content="https://younglina.top/eight/icon.svg" />
+    <meta name="twitter:image" content="https://younglina.wang/eight/icon.svg" />
     
     <!-- 移动端优化 -->
     <meta name="format-detection" content="telephone=no" />
@@ -45,20 +45,44 @@
     <meta name="theme-color" content="#B8860B" />
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://younglina.top/eight" />
+    <link rel="canonical" href="https://younglina.wang/eight" />
     
     <!-- Alternate Languages -->
-    <link rel="alternate" hreflang="zh-CN" href="https://younglina.top/eight" />
-    <link rel="alternate" hreflang="x-default" href="https://younglina.top/eight" />
+    <link rel="alternate" hreflang="zh-CN" href="https://younglina.wang/eight" />
+    <link rel="alternate" hreflang="zh" href="https://younglina.wang/eight" />
+    
+    <!-- GitHub Pages SPA 路由处理 -->
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
     
     <!-- 结构化数据 -->
     <script type="application/ld+json">
     {
-      "@context": "https://younglina.top/eight",
+      "@context": "https://younglina.wang/eight",
       "@type": "WebApplication",
       "name": "生辰八字在线计算器",
       "description": "专业的生辰八字在线计算器，支持公历农历转换，提供详细的八字排盘、五行分析、命主身主查询。",
-      "url": "https://younglina.top/eight",
+      "url": "https://younglina.wang/eight",
       "applicationCategory": "LifestyleApplication",
       "operatingSystem": "Web",
       "offers": {

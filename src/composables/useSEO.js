@@ -106,7 +106,7 @@ export function useSEO() {
         "name": "生辰八字计算器",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://younglina.top/eight/icon.svg"
+          "url": "https://younglina.wang/eight/icon.svg"
         }
       },
       "datePublished": new Date().toISOString(),

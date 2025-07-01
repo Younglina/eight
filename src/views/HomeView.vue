@@ -47,10 +47,10 @@ onMounted(() => {
     "@type": "WebSite",
     "name": "生辰八字在线计算器",
     "description": "专业的生辰八字在线计算器，支持公历农历转换，提供详细的八字排盘、五行分析、命主身主查询。",
-    "url": "https://younglina.top/eight",
+    "url": "https://younglina.wang/eight",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://younglina.top/eightcalculator",
+      "target": "https://younglina.wang/eightcalculator",
       "query-input": "required name=search_term_string"
     },
     "author": {
